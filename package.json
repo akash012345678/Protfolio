@@ -1,0 +1,12 @@
+{
+  "name": "portfolio-ak-root",
+  "version": "1.0.0",
+  "description": "Root forwarding configuration for Akash K's serverless portfolio",
+  "scripts": {
+    "dev": "npm run dev --prefix portfolio/client",
+    "build": "npm run build --prefix portfolio/client",
+    "preview": "npm run preview --prefix portfolio/client"
+  },
+  "author": "Akash K",
+  "license": "ISC"
+}
