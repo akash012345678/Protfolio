@@ -221,10 +221,10 @@ SKILLS:
 - Tools: Git, GitHub, Docker, Jenkins, Linux, Figma
 
 PROJECTS SUMMARY:
-1. Student Learning Management System (Spring Boot, MySQL)
-2. DriveWise - AI Safety Monitoring System (Python, OpenCV)
-3. Smart Healthcare Portal (MERN Stack)
-4. Equipment Failure Predictor (ML, Scikit-learn)
+1. PurpleInsight – AI-Powered Retail Store Intelligence System (Python, FastAPI, YOLOv8)
+2. Student Learning Management System (Spring Boot, MySQL)
+3. DriveWise - AI Safety Monitoring System (Python, OpenCV)
+4. Smart Healthcare Portal (MERN Stack)
 =============================================
     `;
 
@@ -678,9 +678,9 @@ PROJECTS SUMMARY:
                             href={project.githubLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1.5 text-xs font-bold text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border border-gray-300 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-95 cursor-pointer"
                           >
-                            <Github className="w-4 h-4 text-blue-500" />
+                            <Github className="w-3.5 h-3.5" />
                             Repository
                           </a>
                         ) : (
@@ -694,10 +694,10 @@ PROJECTS SUMMARY:
                             href={project.liveLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline transition-colors"
+                            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white transition-all shadow-md shadow-blue-500/10 hover:shadow-blue-500/20 active:scale-95 cursor-pointer"
                           >
-                            Live Demo
-                            <ExternalLink className="w-3.5 h-3.5" />
+                            Demo
+                            <ExternalLink className="w-3 h-3" />
                           </a>
                         ) : (
                           <span className="text-xs text-gray-400 font-medium font-mono">

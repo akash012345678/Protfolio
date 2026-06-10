@@ -1,5 +1,14 @@
 const SEEDED_PROJECTS = [
   {
+    _id: 'proj_purpleinsight',
+    title: 'PurpleInsight – AI-Powered Retail Store Intelligence System',
+    description: 'A hybrid edge-cloud retail analytics platform that converts CCTV and POS data into real-time business insights. Features AI-based customer tracking, heatmap generation, dwell-time analysis, occupancy monitoring, and conversion analytics. Implements scalable FastAPI microservices with spatial-temporal shopper-to-purchase correlation, deployed using Docker, PostgreSQL, TimescaleDB, Redis, and Nginx.',
+    technology: ['Python', 'FastAPI', 'YOLOv8', 'ByteTrack', 'PostgreSQL', 'Redis', 'Docker', 'TimescaleDB', 'Nginx'],
+    githubLink: 'https://github.com/akash012345678/Interactive-AI-Assistant-for-Education.git',
+    liveLink: 'https://retailpulse-frontend.onrender.com',
+    image: '/purpleinsight.png'
+  },
+  {
     _id: 'proj_1',
     title: 'Student Learning Management System',
     description: 'A comprehensive educational course management system featuring role-based secure access control designed for students, instructors, and system administrators.',
@@ -13,7 +22,7 @@ const SEEDED_PROJECTS = [
     title: 'DriveWise – Intelligent Driver Safety Monitoring System',
     description: 'An AI-powered active safety monitoring system that processes real-time camera feeds to detect distracted driving, cell phone usage, and drowsy behaviors using OpenCV and custom ML models.',
     technology: ['Python', 'OpenCV', 'Machine Learning', 'TensorFlow', 'Keras'],
-    githubLink: 'https://github.com/akash-k/drivewise',
+    githubLink: 'https://github.com/akash012345678/Drivewise_Project.git',
     liveLink: '',
     image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800'
   },
@@ -25,26 +34,42 @@ const SEEDED_PROJECTS = [
     githubLink: 'https://github.com/akash-k/smart-healthcare',
     liveLink: '',
     image: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    _id: 'proj_4',
-    title: 'Predict Equipment Failure Using Sensor Data',
-    description: 'A predictive maintenance ML pipeline that reads temperature, vibration, and rotation timeseries sensor streams to forecast hardware malfunctions before failure occurs.',
-    technology: ['Python', 'Pandas', 'Scikit-learn', 'Numpy', 'Matplotlib'],
-    githubLink: 'https://github.com/akash-k/predictive-maintenance',
-    liveLink: '',
-    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800'
   }
 ];
 
+const CURRENT_VERSION = '1.2';
+
 const getStoredProjects = () => {
+  const version = localStorage.getItem('portfolio_version');
+  if (version !== CURRENT_VERSION) {
+    localStorage.removeItem('projects');
+    localStorage.setItem('portfolio_version', CURRENT_VERSION);
+  }
+
   const stored = localStorage.getItem('projects');
   if (!stored) {
     localStorage.setItem('projects', JSON.stringify(SEEDED_PROJECTS));
     return SEEDED_PROJECTS;
   }
   try {
-    return JSON.parse(stored);
+    let parsed = JSON.parse(stored);
+    const decommissionedIds = ['proj_4'];
+
+    // Filter out decommissioned projects
+    parsed = parsed.filter(p => !decommissionedIds.includes(p._id));
+
+    // Force sync default projects with current codebase SEEDED_PROJECTS values
+    SEEDED_PROJECTS.forEach(seeded => {
+      const matchIdx = parsed.findIndex(p => p._id === seeded._id);
+      if (matchIdx !== -1) {
+        parsed[matchIdx] = { ...parsed[matchIdx], ...seeded };
+      } else {
+        parsed.unshift(seeded);
+      }
+    });
+
+    localStorage.setItem('projects', JSON.stringify(parsed));
+    return parsed;
   } catch (e) {
     localStorage.setItem('projects', JSON.stringify(SEEDED_PROJECTS));
     return SEEDED_PROJECTS;
