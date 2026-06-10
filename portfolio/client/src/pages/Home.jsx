@@ -93,6 +93,29 @@ const Home = () => {
     fetchProjects();
   }, []);
 
+  // --- Skills Metadata (Brand Colors & Glows) ---
+  const skillMeta = {
+    'HTML5': { color: '#e34c26', lightColor: 'rgba(227, 76, 38, 0.1)', shadow: 'rgba(227, 76, 38, 0.2)' },
+    'CSS3': { color: '#264de4', lightColor: 'rgba(38, 77, 228, 0.1)', shadow: 'rgba(38, 77, 228, 0.2)' },
+    'JavaScript (ES6+)': { color: '#f7df1e', lightColor: 'rgba(247, 223, 30, 0.1)', shadow: 'rgba(247, 223, 30, 0.2)' },
+    'React.js': { color: '#61dafb', lightColor: 'rgba(97, 218, 251, 0.1)', shadow: 'rgba(97, 218, 251, 0.2)' },
+    'Tailwind CSS': { color: '#38bdf8', lightColor: 'rgba(56, 189, 248, 0.1)', shadow: 'rgba(56, 189, 248, 0.2)' },
+    'Node.js': { color: '#339933', lightColor: 'rgba(51, 153, 51, 0.1)', shadow: 'rgba(51, 153, 51, 0.2)' },
+    'Express.js': { color: '#828282', lightColor: 'rgba(130, 130, 130, 0.1)', shadow: 'rgba(130, 130, 130, 0.2)' },
+    'Spring Boot': { color: '#6db33f', lightColor: 'rgba(109, 179, 63, 0.1)', shadow: 'rgba(109, 179, 63, 0.2)' },
+    'MongoDB': { color: '#47a248', lightColor: 'rgba(71, 162, 72, 0.1)', shadow: 'rgba(71, 162, 72, 0.2)' },
+    'MySQL': { color: '#00758f', lightColor: 'rgba(0, 117, 143, 0.1)', shadow: 'rgba(0, 117, 143, 0.25)' },
+    'Java': { color: '#f8981d', lightColor: 'rgba(248, 152, 29, 0.1)', shadow: 'rgba(248, 152, 29, 0.2)' },
+    'Python': { color: '#3776ab', lightColor: 'rgba(55, 118, 171, 0.1)', shadow: 'rgba(55, 118, 171, 0.2)' },
+    'C++': { color: '#00599c', lightColor: 'rgba(0, 89, 156, 0.1)', shadow: 'rgba(0, 89, 156, 0.2)' },
+    'C': { color: '#a8b9cc', lightColor: 'rgba(168, 185, 204, 0.1)', shadow: 'rgba(168, 185, 204, 0.2)' },
+    'Git & GitHub': { color: '#f05032', lightColor: 'rgba(240, 80, 50, 0.1)', shadow: 'rgba(240, 80, 50, 0.2)' },
+    'Docker': { color: '#2496ed', lightColor: 'rgba(36, 150, 237, 0.1)', shadow: 'rgba(36, 150, 237, 0.2)' },
+    'Jenkins': { color: '#d24939', lightColor: 'rgba(210, 73, 57, 0.1)', shadow: 'rgba(210, 73, 57, 0.2)' },
+    'Linux Commands': { color: '#fcc624', lightColor: 'rgba(252, 198, 36, 0.1)', shadow: 'rgba(252, 198, 36, 0.2)' },
+    'Figma UI/UX': { color: '#f24e1e', lightColor: 'rgba(242, 78, 30, 0.1)', shadow: 'rgba(242, 78, 30, 0.2)' }
+  };
+
   // --- Skills Data ---
   const skillsData = {
     Frontend: [
@@ -497,7 +520,7 @@ PROJECTS SUMMARY:
                   className="glassmorphism-card p-6 rounded-2xl flex flex-col space-y-6 shadow-md relative overflow-hidden"
                 >
                   <div className="flex items-center gap-2.5 border-b border-gray-200 dark:border-dark-border pb-3 text-left">
-                    <div className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800/60">
+                    <div className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800/60 transition-transform duration-300 hover:scale-110">
                       {icons[idx % icons.length]}
                     </div>
                     <h3 className="font-black text-gray-950 dark:text-white text-base">
@@ -505,24 +528,53 @@ PROJECTS SUMMARY:
                     </h3>
                   </div>
 
-                  <div className="space-y-4 text-left">
-                    {skills.map((skill) => (
-                      <div key={skill.name} className="space-y-2">
-                        <div className="flex items-center justify-between text-xs font-bold">
-                          <span className="text-gray-700 dark:text-gray-300">{skill.name}</span>
-                          <span className="text-blue-500 dark:text-blue-400">{skill.percentage}%</span>
-                        </div>
-                        <div className="w-full h-2 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden relative">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${skill.percentage}%` }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1.2, ease: 'easeOut' }}
-                            className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-full shadow-inner shadow-white/10"
-                          />
-                        </div>
-                      </div>
-                    ))}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2 gap-3 text-left">
+                    {skills.map((skill) => {
+                      const meta = skillMeta[skill.name] || { color: '#3b82f6', lightColor: 'rgba(59, 130, 246, 0.1)', shadow: 'rgba(59, 130, 246, 0.2)' };
+                      const level = skill.percentage >= 90 ? 'Expert' : skill.percentage >= 80 ? 'Advanced' : 'Proficient';
+
+                      return (
+                        <motion.div
+                          key={skill.name}
+                          className="flex flex-col space-y-2 p-3 rounded-xl border bg-white/45 dark:bg-slate-900/40 border-gray-200/50 dark:border-gray-800/45"
+                          whileHover={{
+                            scale: 1.03,
+                            y: -2,
+                            borderColor: meta.color,
+                            boxShadow: `0 10px 25px -5px ${meta.shadow}, 0 8px 10px -6px ${meta.shadow}`
+                          }}
+                          transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+                        >
+                          <div className="flex items-center justify-between gap-1.5">
+                            <span className="font-extrabold text-[13px] text-gray-800 dark:text-gray-200 truncate" title={skill.name}>
+                              {skill.name}
+                            </span>
+                            <span
+                              className="text-[9px] font-black tracking-wider uppercase px-2 py-0.5 rounded-full flex-shrink-0"
+                              style={{ backgroundColor: meta.lightColor, color: meta.color }}
+                            >
+                              {level}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <div className="flex-grow h-1.5 bg-gray-200/80 dark:bg-gray-800/80 rounded-full overflow-hidden">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${skill.percentage}%` }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1.2, ease: 'easeOut' }}
+                                className="h-full rounded-full animate-pulse-slow"
+                                style={{ backgroundColor: meta.color }}
+                              />
+                            </div>
+                            <span className="text-[10px] font-black text-gray-500 dark:text-gray-400 min-w-[24px] text-right">
+                              {skill.percentage}%
+                            </span>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
                   </div>
                 </motion.div>
               );
